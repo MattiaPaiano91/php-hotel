@@ -50,8 +50,8 @@ foreach ($hotels as $singleHotel) {
         $filtered[] = $singleHotel;
     } elseif ($singleHotel['parking'] == false && $filterOption == "2" && $filterVote <= $singleHotel['vote']) {
         $filtered[] = $singleHotel;
-    } elseif ($filterOption == "") {
-        $filtered = $hotels;
+    } elseif ($filterOption == "" && $filterVote <= $singleHotel['vote']) {
+        $filtered[] = $singleHotel;
     }
 }
 $hotels = $filtered;
@@ -89,7 +89,7 @@ $hotels = $filtered;
                 for ($i = 1; $i <= 5; $i++) {
 
                 ?>
-                    <option value="<?php $i ?>">
+                    <option value="<?php echo $i ?>">
                         <?php echo $i ?>
                     </option>
                 <?php
@@ -131,7 +131,6 @@ $hotels = $filtered;
                     </tr>
                 <?php
                 }
-
                 ?>
             </tbody>
         </table>
