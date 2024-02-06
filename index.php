@@ -41,17 +41,20 @@ $hotels = [
 ];
 $filterOption = $_GET['filter'];
 
+
+$filterVote = intval($_GET['filterVote']);
+
 $filtered = [];
-    foreach ($hotels as $singleHotel) {
-        if ($singleHotel['parking'] && $filterOption == "1") {
-            $filtered[] = $singleHotel;
-        } elseif ($singleHotel['parking'] == false && $filterOption == "2") {
-            $filtered[] = $singleHotel;
-        } else {
-            $filtered = $hotels;
-        }
+foreach ($hotels as $singleHotel) {
+    if ($singleHotel['parking'] && $filterOption == "1" && $filterVote <= $singleHotel['vote']) {
+        $filtered[] = $singleHotel;
+    } elseif ($singleHotel['parking'] == false && $filterOption == "2" && $filterVote <= $singleHotel['vote']) {
+        $filtered[] = $singleHotel;
+    } elseif ($filterOption == "") {
+        $filtered = $hotels;
     }
-    $hotels = $filtered;
+}
+$hotels = $filtered;
 
 
 ?>
@@ -78,7 +81,21 @@ $filtered = [];
                 <option value="1">Free parking</option>
                 <option value="2">No parking</option>
             </select>
-            <button class="btn btn-outline-primary mt-2"> 
+
+            <h2 class="my-2">Cerca per voto</h2>
+
+            <select class="form-select w-25" name="filterVote" aria-label="Default select example">
+                <?php
+                for ($i = 1; $i <= 5; $i++) {
+
+                ?>
+                    <option value="<?php $i ?>">
+                        <?php echo $i ?>
+                    </option>
+                <?php
+                } ?>
+            </select>
+            <button type="submit" class="btn btn-outline-primary mt-2">
                 Cerca
             </button>
         </form>
